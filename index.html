@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zuzia 💖 Walentynka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd6e8, #ffeef5);
+            text-align: center;
+            padding-top: 40px;
+            overflow: hidden;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 36px;
+        }
+        button {
+            font-size: 22px;
+            padding: 14px 32px;
+            margin: 20px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover { transform: scale(1.1); }
+        #tak { background-color: #ff4d6d; color: white; }
+        #nie { background-color: #adb5bd; color: white; position: absolute; }
+        #result {
+            font-size: 44px;
+            color: #ff006e;
+            margin-top: 30px;
+            display: none;
+            z-index: 10;
+        }
+        img {
+            width: 220px;
+            margin: 15px;
+            border-radius: 16px;
+        }
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: confetti-fall 1s forwards;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(500px) rotate(360deg) scale(0.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Zuzia, czy zostaniesz moją walentynką? 💌</h1>
+
+<!-- GIFY -->
+<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif
+">
+<img src="https://media.giphy.com/media/26FLdmIp6wJr91JAI/giphy.gif
+">
+
+<div>
+    <button id="tak" onclick="yesClick()">TAK 💖</button>
+    <button id="nie" onmouseover="moveNo()">NIE 😢</button>
+</div>
+
+<div id="result">YAAAAAYYYY 💖🎉</div>
+
+<!-- DŹWIĘKI -->
+<audio id="yaySound">
+    <source src="https://actions.google.com/sounds/v1/cartoon/clang.ogg
+" type="audio/ogg">
+</audio>
+<audio id="noSound">
+    <source src="https://actions.google.com/sounds/v1/cartoon/boing.ogg
+" type="audio/ogg">
+</audio>
+
+<script>
+function yesClick() {
+    document.getElementById("result").style.display = "block";
+    const sound = document.getElementById("yaySound");
+    sound.volume = 0.7;
+    sound.play().catch(e => console.log("Błąd odtwarzania dźwięku:", e));
+    shootConfetti();
+}
+
+// Przyciski NIE ucieka szybciej i zmienia kolor + dźwięk
+function moveNo() {
+    const no = document.getElementById("nie");
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    no.style.left = x + "px";
+    no.style.top = y + "px";
+    no.style.backgroundColor = ["#ff4d6d","#ffd166","#06d6a0","#118ab2","#f72585"][Math.floor(Math.random()*5)];
+    
+    const sound = document.getElementById("noSound");
+    sound.volume = 0.7;
+    sound.play().catch(e => console.log("Błąd odtwarzania dźwięku:", e));
+}
+
+// Wystrzał konfetti z różnych miejsc ekranu
+function shootConfetti() {
+    for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = Math.random() * 100 + "px";
+        confetti.style.backgroundColor =
+            ["#ff4d6d", "#ffd166", "#06d6a0", "#118ab2", "#f72585"][Math.floor(Math.random()*5)];
+        confetti.style.animationDuration = (Math.random()*1 + 1) + "s";
+        confetti.style.transform = rotate(${Math.random()*360}deg);
+        document.body.appendChild(confetti);
+        setTimeout(()=>{ confetti.remove(); }, 1500);
+    }
+}
+</script>
+
+</body>
+</html>
